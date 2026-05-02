@@ -18,7 +18,7 @@ export class HeroService {
     stream: () => this.http.get<Hero[]>(this.BASE_URL)
   });
   
-  private heroes = signal<Hero[]>([]);
+  public heroes = signal<Hero[]>([]);
   public searchTerm = signal<string>('');
 
   // Señal debounced: espera 300ms antes de emitir el nuevo valor

@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroesPageComponent } from './heroes-page';
 import { provideHttpClient } from '@angular/common/http';
@@ -27,4 +28,5 @@ describe('HeroesPageComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
 

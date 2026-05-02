@@ -1,3 +1,4 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroListComponent } from './hero-list';
 import { HeroService } from '../../../../core/services/hero.service';
@@ -5,64 +6,62 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { MatDialog } from '@angular/material/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
 import { signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HeroListComponent', () => {
   let component: HeroListComponent;
   let fixture: ComponentFixture<HeroListComponent>;
-  let heroService: any;
-  let swalService: any;
+  let heroServiceMock: Partial<HeroService>;
+  let swalServiceMock: Partial<SwalService>;
 
   beforeEach(async () => {
-    const heroServiceSpy = {
-      getHeroes: vi.fn(),
-      fetchHeroes: vi.fn(),
+    heroServiceMock = {
+      heroes: signal([
+        { id: 1, name: 'Superman', powerstats: {}, appearance: {}, biography: {}, work: {}, connections: {}, images: {}, slug: 'superman' },
+        { id: 2, name: 'Batman', powerstats: {}, appearance: {}, biography: {}, work: {}, connections: {}, images: {}, slug: 'batman' }
+      ]),
+      searchTerm: signal(''),
+      filteredHeroes: signal([]),
+      getIsEditing: signal(false),
+      getHeroes: vi.fn().mockReturnValue(signal([])),
       deleteHero: vi.fn(),
       startEditing: vi.fn()
     };
-    const swalServiceSpy = {
+
+    swalServiceMock = {
       confirmDelete: vi.fn()
     };
 
     await TestBed.configureTestingModule({
-      imports: [MatTableModule, MatPaginatorModule, HeroListComponent],
+      imports: [MatPaginatorModule, HeroListComponent, NoopAnimationsModule],
       providers: [
-        { provide: HeroService, useValue: heroServiceSpy },
-        { provide: SwalService, useValue: swalServiceSpy },
+        { provide: HeroService, useValue: heroServiceMock },
+        { provide: SwalService, useValue: swalServiceMock },
         provideHttpClient(),
-        { provide: MatDialog, useValue: {} },
+        { provide: MatDialog, useValue: { open: vi.fn() } },
         provideRouter([])
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroListComponent);
     component = fixture.componentInstance;
-    heroService = TestBed.inject(HeroService);
-    swalService = TestBed.inject(SwalService);
-
-    heroService.getHeroes.mockReturnValue(signal([
-      { id: 1, name: 'Superman', powerstats: {}, appearance: {}, biography: {}, work: {}, connections: {}, images: {}, slug: 'superman' },
-      { id: 2, name: 'Batman', powerstats: {}, appearance: {}, biography: {}, work: {}, connections: {}, images: {}, slug: 'batman' }
-    ]));
-    component.heroes = heroService.getHeroes();
+    fixture.detectChanges();
   });
 
   it('debería crearse', () => {
     expect(component).toBeTruthy();
   });
 
-  it('debería llamar a fetchHeroes si no hay héroes en memoria', () => {
-    heroService.getHeroes.mockReturnValue(signal([]));
-    component.heroes = signal([]);
-    fixture.detectChanges();
-    expect(heroService.fetchHeroes).toHaveBeenCalled();
+  it('debería ejecutar deleteHero() con confirmación de SweetAlert', async () => {
+    vi.mocked(swalServiceMock.confirmDelete!).mockResolvedValue(true);  
+    await component.deleteHero(1);
+    expect(vi.mocked(heroServiceMock.deleteHero!)).toHaveBeenCalledWith(1);
   });
   
-  it('debería ejecutar deleteHero() con confirmación de SweetAlert', async () => {
-    swalService.confirmDelete.mockResolvedValue(true);  
-    await component.deleteHero(1);
-    expect(heroService.deleteHero).toHaveBeenCalledWith(1);
-  });  
+  it('debería abrir el formulario de creación', () => {
+    component.createHero();
+    expect(vi.mocked(heroServiceMock.startEditing!)).toHaveBeenCalledWith(null);
+  });
 });

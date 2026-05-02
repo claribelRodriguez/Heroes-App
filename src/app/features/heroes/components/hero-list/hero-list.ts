@@ -1,6 +1,6 @@
 import { Component, inject, Signal, computed, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -60,7 +60,7 @@ export class HeroListComponent {
     this.currentPage.set(0);
   }
 
-  onPageChange(event: any) {
+  onPageChange(event: PageEvent) {
     this.currentPage.set(event.pageIndex);
     this.pageSize.set(event.pageSize);
   }  

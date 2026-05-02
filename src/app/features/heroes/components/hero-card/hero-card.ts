@@ -15,6 +15,11 @@ import { Hero } from '../../../../core/models/heroe.model';
 export class HeroCardComponent {
   hero: Hero;
 
+  getHeroImage(image: string | string[] | undefined): string {
+    if (!image) return 'assets/images/default-hero.png';
+    return Array.isArray(image) ? image[0] : image;
+  }
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: { hero: Hero }) {
     this.hero = data.hero;
   }
