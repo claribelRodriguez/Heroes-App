@@ -1,0 +1,10 @@
+@if (heroService.getIsEditing()) {
+    <app-hero-form [hero]="heroService.getEditingHero()" />
+  } @else {
+    <app-hero-list />
+  }
+  
+  
+  
+  
+  

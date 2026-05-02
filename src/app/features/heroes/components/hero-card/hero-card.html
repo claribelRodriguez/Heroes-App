@@ -1,0 +1,78 @@
+@if (hero) {
+<div class="hero-modal-container">
+  <div class="hero-modal-content">
+    
+    <!-- Lado Izquierdo: Imagen -->
+    <div class="hero-visual">
+      <img [src]="hero.images.md" [alt]="hero.name">
+      <div class="hero-name-overlay">
+        <h2>{{ hero.name }}</h2>
+        <span class="publisher">{{ hero.biography.publisher }}</span>
+      </div>
+    </div>
+
+    <!-- Lado Derecho: Info -->
+    <div class="hero-details">
+      <div class="detail-section">
+        <h3>Poderes</h3>
+        <div class="stats-container">
+          <div class="stat-row">
+            <span class="label">🧠 Inteligencia</span>
+            <div class="progress-bg"><div class="progress-fill" [style.width.%]="hero.powerstats.intelligence || 0"></div></div>
+            <span class="value">{{ hero.powerstats.intelligence || 0 }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="label">💪 Fuerza</span>
+            <div class="progress-bg"><div class="progress-fill" [style.width.%]="hero.powerstats.strength || 0"></div></div>
+            <span class="value">{{ hero.powerstats.strength || 0 }}</span>
+          </div>
+          <div class="stat-row">
+            <span class="label">⚡ Velocidad</span>
+            <div class="progress-bg"><div class="progress-fill" [style.width.%]="hero.powerstats.speed || 0"></div></div>
+            <span class="value">{{ hero.powerstats.speed || 0 }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>Información General</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>person</mat-icon>
+            <div>
+              <label>Género</label>
+              <p>{{ hero.appearance.gender }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>visibility</mat-icon>
+            <div>
+              <label>Ojos</label>
+              <p>{{ hero.appearance.eyeColor }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>public</mat-icon>
+            <div>
+              <label>Origen</label>
+              <p>{{ hero.biography.placeOfBirth }}</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <mat-icon>straighten</mat-icon>
+            <div>
+              <label>Altura</label>
+              <p>{{ hero.appearance.height[1] }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button mat-button mat-dialog-close color="primary">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+}

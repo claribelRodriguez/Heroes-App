@@ -1,0 +1,76 @@
+<header class="glass-header">
+  <div class="header-main">
+    <div class="branding">
+      <h1>Heroes <span>App</span></h1>
+      <button mat-flat-button class="add-btn" color="primary" (click)="createHero()">
+        <mat-icon>add</mat-icon>
+        Crear Héroe
+      </button>
+    </div>
+
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" 
+               (input)="filterHeroes($event)"
+               placeholder="Busca tu héroe..." />
+      </div>
+    </div>
+  </div>
+</header>
+  <div class="hero-grid-container">
+    @if (loading()) {
+      <div class="spinner-container">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+    } @else {
+      <div class="hero-grid">
+        @for (hero of paginatedHeroes(); track hero.id) {
+          @defer (on viewport) {
+            <div class="hero-item">
+              <div class="hero-card-modern">
+                <div class="hero-image-wrapper" (click)="openHeroCard(hero)">
+                  <img [src]="hero.images.sm || 'assets/images/default-hero.png'" [alt]="hero.name" loading="lazy">
+                  <div class="hero-overlay">
+                    <span>Ver Detalles</span>
+                  </div>
+                </div>
+                <div class="hero-info">
+                  <h3>{{ hero.name }}</h3>
+                  <div class="hero-stats">
+                    <span>🧠 {{ hero.powerstats.intelligence }}</span>
+                    <span>💪 {{ hero.powerstats.strength }}</span>
+                    <span>⚡ {{ hero.powerstats.speed }}</span>
+                  </div>
+                  <div class="hero-actions">
+                    <button mat-icon-button (click)="editHero(hero)">
+                      <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="deleteHero(hero.id)">
+                      <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } @placeholder {
+            <div class="hero-skeleton">
+              <div class="skeleton-img"></div>
+              <div class="skeleton-text"></div>
+            </div>
+          } @loading (after 100ms; minimum 500ms) {
+            <div class="hero-loading">
+              <mat-spinner diameter="30" />
+            </div>
+          }
+        }
+      </div>
+
+      <mat-paginator 
+          [length]="totalHeroes()" 
+          [pageSize]="pageSize()" 
+          [pageSizeOptions]="[10, 20, 50]" 
+          showFirstLastButtons 
+          (page)="onPageChange($event)" />
+    }
+  </div>
