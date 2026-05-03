@@ -5671,6 +5671,53 @@
         "lg": ""
       },
       "slug": "superman"
+    },
+    {
+      "id": "CkryieD89iE",
+      "name": "CORA",
+      "powerstats": {
+        "intelligence": 1,
+        "strength": 2,
+        "speed": 3
+      },
+      "appearance": {
+        "gender": "Mujer",
+        "eyeColor": "verdes",
+        "height": [
+          "Unknown",
+          "Unknown"
+        ],
+        "weight": [
+          "Unknown",
+          "Unknown"
+        ]
+      },
+      "biography": {
+        "fullName": "CORA",
+        "placeOfBirth": "Monte grande",
+        "publisher": "trtrtr",
+        "aliases": []
+      },
+      "work": {
+        "occupation": "Desconocida",
+        "base": "Desconocida"
+      },
+      "connections": {
+        "groupAffiliation": "Desconocida",
+        "relatives": "Desconocida"
+      },
+      "images": {
+        "sm": [
+          "assets/images/default-hero.png"
+        ],
+        "md": [
+          "assets/images/default-hero.png"
+        ],
+        "lg": [
+          "assets/images/default-hero.png"
+        ]
+      },
+      "slug": "cora"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

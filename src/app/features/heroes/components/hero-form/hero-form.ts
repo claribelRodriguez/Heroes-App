@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { HeroService } from '../../../../core/services/hero.service';
 import { Hero } from '../../../../core/models/heroe.model';
 import { UppercaseDirective } from '../../../../shared/directives/uppercase.directive';
@@ -18,6 +19,7 @@ import { UppercaseDirective } from '../../../../shared/directives/uppercase.dire
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     UppercaseDirective,
   ],
 })
@@ -25,22 +27,21 @@ export class HeroFormComponent {
   private fb = inject(FormBuilder);
   private heroService = inject(HeroService);
 
-  
-  // Signal Input (Angular 21)
+  private alphaPattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+
   hero = input<Hero | null>(null);
 
   heroForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    intelligence: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-    strength: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-    speed: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
-    gender: ['', Validators.required],
-    eyeColor: ['', Validators.required],
-    placeOfBirth: [''],
-    publisher: [''],
+    name: ['', [Validators.required, Validators.pattern(this.alphaPattern)]],
+    intelligence: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    strength: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    speed: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    gender: ['', [Validators.required, Validators.pattern(this.alphaPattern)]],
+    eyeColor: ['', [Validators.required, Validators.pattern(this.alphaPattern)]],
+    placeOfBirth: ['', [Validators.pattern(this.alphaPattern)]],
+    publisher: ['', [Validators.pattern(this.alphaPattern)]],
   });
 
-  // linkedSignal: Se reinicia automáticamente cuando el input 'hero' cambia
   private formInitializer = linkedSignal({
     source: this.hero,
     computation: (hero) => {
@@ -63,11 +64,8 @@ export class HeroFormComponent {
   });
 
   constructor() {
-    // Registramos el linkedSignal para que esté activo
     effect(() => { this.formInitializer(); });
-  }
-  
-  
+  }  
 
   saveHero() {
     if (this.heroForm.invalid) return;

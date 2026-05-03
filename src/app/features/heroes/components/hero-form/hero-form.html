@@ -1,72 +1,115 @@
 <div class="container">
-  <h2>@if (hero()?.id) { Editar Héroe } @else { Nuevo Héroe }</h2>
-    <div class="form-container">
-      <form [formGroup]="heroForm" (ngSubmit)="saveHero()">
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="name" uppercase required />
-          </mat-form-field>
-        </div>
+  <div class="form-header">
+    <mat-icon color="primary" class="header-icon">@if (hero()?.id) { edit } @else { add_circle }</mat-icon>
+    <h2>@if (hero()?.id) { Editar Héroe } @else { Nuevo Héroe }</h2>
+  </div>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Inteligencia</mat-label>
-            <input type="number" matInput formControlName="intelligence" required />
-          </mat-form-field>
-        </div>
+  <div class="form-card">
+    <form [formGroup]="heroForm" (ngSubmit)="saveHero()" class="modern-form">
+      <div class="form-grid">
+        <!-- Nombre: Ocupa toda la fila -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre del Héroe</mat-label>
+          <input matInput formControlName="name" uppercase placeholder="Ej. Batman" />
+          <mat-icon matSuffix>badge</mat-icon>
+          @if (heroForm.get('name')?.errors?.['required']) {
+            <mat-error>El nombre es obligatorio</mat-error>
+          }
+          @if (heroForm.get('name')?.errors?.['pattern']) {
+            <mat-error>Solo se permiten letras y espacios</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Fuerza</mat-label>
-            <input type="number" matInput formControlName="strength" required />
-          </mat-form-field>
-        </div>
+        <!-- Powerstats Group -->
+        <div class="section-title">Estadísticas de Poder (0-100)</div>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Inteligencia</mat-label>
+          <input type="number" matInput formControlName="intelligence" placeholder="0-100" />
+          <mat-icon matSuffix>psychology</mat-icon>
+          @if (heroForm.get('intelligence')?.errors?.['required']) {
+            <mat-error>Requerido</mat-error>
+          }
+          @if (heroForm.get('intelligence')?.errors?.['min'] || heroForm.get('intelligence')?.errors?.['max']) {
+            <mat-error>Rango: 0 a 100</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Velocidad</mat-label>
-            <input type="number" matInput formControlName="speed" required />
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Fuerza</mat-label>
+          <input type="number" matInput formControlName="strength" placeholder="0-100" />
+          <mat-icon matSuffix>fitness_center</mat-icon>
+          @if (heroForm.get('strength')?.errors?.['required']) {
+            <mat-error>Requerido</mat-error>
+          }
+          @if (heroForm.get('strength')?.errors?.['min'] || heroForm.get('strength')?.errors?.['max']) {
+            <mat-error>Rango: 0 a 100</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Género</mat-label>
-            <input matInput formControlName="gender" required />
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Velocidad</mat-label>
+          <input type="number" matInput formControlName="speed" placeholder="0-100" />
+          <mat-icon matSuffix>speed</mat-icon>
+          @if (heroForm.get('speed')?.errors?.['required']) {
+            <mat-error>Requerido</mat-error>
+          }
+          @if (heroForm.get('speed')?.errors?.['min'] || heroForm.get('speed')?.errors?.['max']) {
+            <mat-error>Rango: 0 a 100</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Color de Ojos</mat-label>
-            <input matInput formControlName="eyeColor" required />
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Género</mat-label>
+          <input matInput formControlName="gender" placeholder="Ej. Male / Female" />
+          @if (heroForm.get('gender')?.errors?.['required']) {
+            <mat-error>Requerido</mat-error>
+          }
+          @if (heroForm.get('gender')?.errors?.['pattern']) {
+            <mat-error>Solo letras</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Lugar de Nacimiento</mat-label>
-            <input matInput formControlName="placeOfBirth" />
-          </mat-form-field>
-        </div>
+        <!-- Apariencia Group -->
+        <div class="section-title">Biografía y Apariencia</div>
 
-        <div class="field-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Editorial</mat-label>
-            <input matInput formControlName="publisher" />
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Color de Ojos</mat-label>
+          <input matInput formControlName="eyeColor" placeholder="Ej. Blue" />
+          @if (heroForm.get('eyeColor')?.errors?.['required']) {
+            <mat-error>Requerido</mat-error>
+          }
+          @if (heroForm.get('eyeColor')?.errors?.['pattern']) {
+            <mat-error>Solo letras</mat-error>
+          }
+        </mat-form-field>
 
-        <div class="button-container">
-          <button mat-raised-button color="primary" type="submit" [disabled]="heroForm.invalid">
-            Guardar
-          </button>
-          <button mat-button color="warn" type="button" (click)="cancel()">
-            Cancelar
-          </button>          
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Editorial</mat-label>
+          <input matInput formControlName="publisher" placeholder="Ej. Marvel / DC" />
+          @if (heroForm.get('publisher')?.errors?.['pattern']) {
+            <mat-error>Solo letras</mat-error>
+          }
+        </mat-form-field>
 
-      </form>
-    </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Lugar de Nacimiento</mat-label>
+          <input matInput formControlName="placeOfBirth" placeholder="Ej. New York, USA" />
+          @if (heroForm.get('placeOfBirth')?.errors?.['pattern']) {
+            <mat-error>Solo letras y espacios</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="heroForm.invalid" class="save-btn">
+          <mat-icon>save</mat-icon>
+          {{ hero()?.id ? 'Actualizar' : 'Crear' }} Héroe
+        </button>
+        <button mat-stroked-button color="warn" type="button" (click)="cancel()">
+          Cancelar
+        </button>          
+      </div>
+    </form>
+  </div>
 </div>

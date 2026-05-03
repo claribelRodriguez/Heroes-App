@@ -14,7 +14,6 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingService } from '../../../../core/services/loading.service';
 
-
 @Component({
   selector: 'app-hero-list',
   standalone: true,
@@ -51,9 +50,6 @@ export class HeroListComponent {
     return this.filteredHeroes().slice(start, start + this.pageSize());
   });
   
-
-
-
   filterHeroes(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.heroService.searchTerm.set(inputValue);
@@ -87,8 +83,6 @@ export class HeroListComponent {
       maxWidth: '95vw',
       panelClass: 'hero-detail-dialog'
     });
-  }
-  
-  
+  }  
 }
 

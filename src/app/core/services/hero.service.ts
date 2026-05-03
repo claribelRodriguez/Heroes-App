@@ -27,7 +27,6 @@ export class HeroService {
     { initialValue: '' }
   );
   
-  // El filtrado ahora reacciona a la señal con debounce
   public filteredHeroes = computed(() => {
     const term = this.debouncedSearchTerm().toLowerCase();
     const allHeroes = this.heroes();
@@ -41,7 +40,6 @@ export class HeroService {
   getIsEditing = this.isEditing.asReadonly();
   getEditingHero = this.editingHero.asReadonly();
 
-  // Exponemos estados del recurso para la UI
   public isLoading = this.heroesResource.isLoading;
   public error = this.heroesResource.error;
 
