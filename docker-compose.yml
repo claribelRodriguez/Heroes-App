@@ -1,0 +1,16 @@
+services:
+  # Frontend: Nuestra aplicación Angular
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # Backend: El servidor JSON que simula la base de datos
+  backend:
+    image: clue/json-server
+    volumes:
+      - ./db.json:/data/db.json
+    ports:
+      - "3000:80"

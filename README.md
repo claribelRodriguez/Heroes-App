@@ -1,49 +1,55 @@
-# Heroes App 🏎️💨
+# Heroes App - Angular 21 (Zoneless)
 
-Este proyecto es una aplicación moderna de gestión de superhéroes construida con **Angular 21**, diseñada bajo los más altos estándares de rendimiento y mantenibilidad (Arquitectura "Ferrari").
+Este repositorio contiene una aplicación de gestión de héroes desarrollada con Angular 21. El proyecto utiliza una arquitectura zoneless para optimizar el rendimiento y Vitest para la suite de pruebas unitarias.
 
-## 🚀 Características Principales
+## Instrucciones de ejecución
 
-- **Angular 21 (Zoneless)**: Implementación de arquitectura sin `Zone.js` para un rendimiento de renderizado superior.
-- **Programación Reactiva con Signals**:
-  - Uso de `rxResource` para la gestión asíncrona de datos.
-  - `linkedSignal` para la sincronización inteligente de estado en formularios.
-  - `computed` y `Signal Inputs` para un flujo de datos eficiente.
-- **Deferrable Views (@defer)**: Optimización de carga crítica mediante Lazy Loading de componentes en función del viewport.
-- **Diseño Premium**: Interfaz moderna basada en **Angular Material**, con efectos de Glassmorphism, animaciones fluidas y un sistema de diseño responsivo.
-- **Persistencia Real**: Backend simulado con `json-server` para operaciones CRUD reales.
-- **Testing Moderno**: Suite de pruebas unitarias migrada de Karma a **Vitest** para una ejecución ultrarrápida.
+### Desarrollo Local
 
-## 🛠️ Stack Tecnológico
+Para ejecutar la aplicación en un entorno de desarrollo local, siga estos pasos:
 
-- **Frontend**: Angular 21, RxJS, Signals.
-- **UI/UX**: Angular Material, SweetAlert2, CSS Grid/Flexbox.
-- **Tooling**: Vitest, Angular CLI.
+1.  **Instalación de dependencias:**
+    ```bash
+    npm install
+    ```
 
-## 📦 Instalación y Uso
+2.  **Servidor de base de datos (Backend):**
+    En una terminal independiente, ejecute el servidor mock:
+    ```bash
+    npm run backend
+    ```
+    El servidor estará disponible en `http://localhost:3000`.
 
-1. **Clonar el repositorio e instalar dependencias:**
-   ```bash
-   npm install
-   ```
+3.  **Servidor de aplicación (Frontend):**
+    En otra terminal, inicie el servidor de desarrollo de Angular:
+    ```bash
+    npm start
+    ```
+    La aplicación se cargará en `http://localhost:4200`.
 
-2. **Iniciar el Servidor de Datos (Backend):**
-   ```bash
-   npm run backend
-   ```
+### Ejecución con Docker
 
-3. **Iniciar la Aplicación (Frontend):**
-   ```bash
-   npm start
-   ```
-   La aplicación estará disponible en `http://localhost:4200`.
+El proyecto está configurado para ejecutarse en contenedores utilizando Docker y Docker Compose.
 
-## 🧪 Testing
+1.  **Iniciar servicios:**
+    Desde la raíz del proyecto, ejecute el siguiente comando:
+    ```bash
+    docker-compose up --build
+    ```
 
-Para ejecutar las pruebas unitarias con Vitest:
-```bash
-npm test
-```
+2.  **Puertos configurados:**
+    -   Aplicación web: `http://localhost:80`
+    -   Servidor JSON: `http://localhost:3000`
 
----
-Desarrollado con ❤️ por Claribel Rodriguez
+## Pruebas Unitarias
+
+La suite de pruebas utiliza Vitest. Para ejecutar los tests y generar informes de cobertura, utilice los siguientes comandos:
+
+-   Ejecución de tests: `npm test`
+-   Informe de cobertura: `npx vitest run --coverage`
+
+## Stack Tecnológico
+- Angular 21 (Zoneless)
+- Vitest / JSDOM
+- Docker / Docker Compose
+- Nginx (Servidor de producción)
