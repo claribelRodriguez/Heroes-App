@@ -6,7 +6,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { MatDialog } from '@angular/material/dialog';
 import { provideHttpClient } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { signal } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,13 +37,18 @@ describe('HeroListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MatPaginatorModule, HeroListComponent, NoopAnimationsModule],
       providers: [
+        provideZonelessChangeDetection(),
         { provide: HeroService, useValue: heroServiceMock },
         { provide: SwalService, useValue: swalServiceMock },
         provideHttpClient(),
         { provide: MatDialog, useValue: { open: vi.fn() } },
         provideRouter([])
       ],
-    }).compileComponents();
+    })
+    .overrideComponent(HeroListComponent, {
+      set: { templateUrl: '', styleUrls: [] }
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(HeroListComponent);
     component = fixture.componentInstance;
@@ -65,3 +70,6 @@ describe('HeroListComponent', () => {
     expect(vi.mocked(heroServiceMock.startEditing!)).toHaveBeenCalledWith(null);
   });
 });
+
+
+

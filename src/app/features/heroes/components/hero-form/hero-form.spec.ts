@@ -7,15 +7,18 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+import { provideZonelessChangeDetection } from '@angular/core';
+
 describe('HeroFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, HeroFormComponent],
       providers: [
+        provideZonelessChangeDetection(),
         HeroService,
         provideHttpClient(),
         FormBuilder,
-        { provide: Router, useValue: {} },
+        { provide: Router, useValue: { navigate: vi.fn() } },
         { provide: ActivatedRoute, useValue: { paramMap: { subscribe: () => {} } } },
       ],
     }).compileComponents();
@@ -27,4 +30,7 @@ describe('HeroFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+
 

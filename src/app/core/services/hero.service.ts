@@ -13,7 +13,6 @@ export class HeroService {
   private swalService = inject(SwalService);
   private BASE_URL = 'http://localhost:3000/heroes';
   
-  // rxResource carga los 100 héroes iniciales una sola vez
   private heroesResource = rxResource({
     stream: () => this.http.get<Hero[]>(this.BASE_URL)
   });
@@ -21,7 +20,6 @@ export class HeroService {
   public heroes = signal<Hero[]>([]);
   public searchTerm = signal<string>('');
 
-  // Señal debounced: espera 300ms antes de emitir el nuevo valor
   private debouncedSearchTerm = toSignal(
     toObservable(this.searchTerm).pipe(debounceTime(300)),
     { initialValue: '' }
@@ -67,7 +65,6 @@ export class HeroService {
   }
 
   addHero(hero: Hero) {
-    // Validación de duplicados
     const isDuplicate = this.heroes().some(h => h.name.toLowerCase() === hero.name.toLowerCase());
     
     if (isDuplicate) {

@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HeroCardComponent } from './hero-card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('HeroCardComponent', () => {
   const mockHero = {
@@ -18,10 +19,15 @@ describe('HeroCardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeroCardComponent, NoopAnimationsModule],
       providers: [
+        provideZonelessChangeDetection(),
         { provide: MAT_DIALOG_DATA, useValue: { hero: mockHero } },
         { provide: MatDialogRef, useValue: { close: vi.fn() } },
       ],
-    }).compileComponents();
+    })
+    .overrideComponent(HeroCardComponent, {
+      set: { templateUrl: '', styleUrls: [] }
+    })
+    .compileComponents();
   });
 
   it('debería crearse el componente', () => {
@@ -37,3 +43,6 @@ describe('HeroCardComponent', () => {
     expect(compiled.querySelector('h2')?.textContent).toContain('Test Hero');
   });
 });
+
+
+
