@@ -1,11 +1,11 @@
-import { Component, inject, Signal, input, linkedSignal, effect } from '@angular/core';
+import { Component, inject, input, effect } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeroService } from '../../../../core/services/hero.service';
-import { Hero } from '../../../../core/models/heroe.model';
+import { Hero } from '../../../../core/models/hero.model';
 import { UppercaseDirective } from '../../../../shared/directives/uppercase.directive';
 
 
@@ -27,7 +27,7 @@ export class HeroFormComponent {
   private fb = inject(FormBuilder);
   private heroService = inject(HeroService);
 
-  private alphaPattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/;
+  private alphaPattern = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\-\'., ]+$/;
 
   hero = input<Hero | null>(null);
 
@@ -42,9 +42,9 @@ export class HeroFormComponent {
     publisher: ['', [Validators.pattern(this.alphaPattern)]],
   });
 
-  private formInitializer = linkedSignal({
-    source: this.hero,
-    computation: (hero) => {
+  constructor() {
+    effect(() => {
+      const hero = this.hero();
       if (hero) {
         this.heroForm.patchValue({
           name: hero.name || '',
@@ -59,12 +59,7 @@ export class HeroFormComponent {
       } else {
         this.heroForm.reset();
       }
-      return hero;
-    }
-  });
-
-  constructor() {
-    effect(() => { this.formInitializer(); });
+    });
   }  
 
   saveHero() {

@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { Hero } from '../../../../core/models/heroe.model';
+import { Hero } from '../../../../core/models/hero.model';
 import { HeroService } from '../../../../core/services/hero.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { HeroCardComponent } from '../hero-card/hero-card';
@@ -42,12 +42,10 @@ export class HeroListComponent {
   currentPage = signal<number>(0);
 
   totalHeroes = computed(() => this.heroes().length);
-
-  filteredHeroes = computed(() => this.heroes());
   
   paginatedHeroes = computed(() => {
     const start = this.currentPage() * this.pageSize();
-    return this.filteredHeroes().slice(start, start + this.pageSize());
+    return this.heroes().slice(start, start + this.pageSize());
   });
   
   filterHeroes(event: Event) {

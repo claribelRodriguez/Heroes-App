@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { Hero } from '../../../../core/models/heroe.model';
+import { Hero } from '../../../../core/models/hero.model';
 
 @Component({
   selector: 'app-hero-card',

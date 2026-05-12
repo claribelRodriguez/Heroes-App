@@ -30,7 +30,7 @@
             <div class="hero-item">
               <div class="hero-card-modern">
                 <div class="hero-image-wrapper" (click)="openHeroCard(hero)">
-                  <img [src]="hero.images.sm || 'assets/images/default-hero.png'" [alt]="hero.name" loading="lazy">
+                  <img [src]="hero.images?.sm || 'assets/images/default-hero.png'" [alt]="hero.name" loading="lazy">
                   <div class="hero-overlay">
                     <span>Ver Detalles</span>
                   </div>
@@ -38,9 +38,9 @@
                 <div class="hero-info">
                   <h3>{{ hero.name }}</h3>
                   <div class="hero-stats">
-                    <span>🧠 {{ hero.powerstats.intelligence }}</span>
-                    <span>💪 {{ hero.powerstats.strength }}</span>
-                    <span>⚡ {{ hero.powerstats.speed }}</span>
+                    <span>🧠 {{ hero.powerstats?.intelligence }}</span>
+                    <span>💪 {{ hero.powerstats?.strength }}</span>
+                    <span>⚡ {{ hero.powerstats?.speed }}</span>
                   </div>
                   <div class="hero-actions">
                     <button mat-icon-button (click)="editHero(hero)">

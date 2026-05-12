@@ -4,7 +4,7 @@ import { HeroService } from './hero.service';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { SwalService } from './swal.service';
-import { Hero } from '../models/heroe.model';
+import { Hero } from '../models/hero.model';
 
 describe('HeroService', () => {
   let service: HeroService;

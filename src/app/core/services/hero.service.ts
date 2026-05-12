@@ -2,7 +2,7 @@ import { Injectable, Signal, signal, computed, effect, inject } from '@angular/c
 import { HttpClient } from '@angular/common/http';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
-import { Hero } from '../models/heroe.model';
+import { Hero } from '../models/hero.model';
 import { SwalService } from './swal.service';
 
 @Injectable({
@@ -54,14 +54,14 @@ export class HeroService {
     return this.filteredHeroes;
   }
 
-  getHeroById(id: string | number): Signal<Hero | undefined> {
-    return computed(() => this.heroes().find(hero => hero.id.toString() === id.toString()));
+  getHeroById(id: string | number): Hero | undefined {
+    return this.heroes().find(hero => hero.id.toString() === id.toString());
   }
 
-  searchHeroes(name: string): Signal<Hero[]> {
-    return computed(() => this.heroes().filter(hero =>
+  searchHeroes(name: string): Hero[] {
+    return this.heroes().filter(hero =>
       hero.name.toLowerCase().includes(name.toLowerCase())
-    ));
+    );
   }
 
   addHero(hero: Hero) {

@@ -23,6 +23,7 @@
     font-weight: 700;
     background: linear-gradient(135deg, var(--primary-color), #2980b9);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 }
@@ -83,21 +84,14 @@
   }
 }
 
-// Estilos específicos para inputs de Material
-::ng-deep .mat-mdc-form-field {
+mat-form-field {
   width: 100%;
-}
-
-::ng-deep .mat-mdc-text-field-wrapper {
-  background-color: white !important;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-// Responsividad para móviles
 @media (max-width: 600px) {
   .form-grid {
     grid-template-columns: 1fr;
